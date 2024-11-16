@@ -1,0 +1,16 @@
+// table for items where users can estimate
+CREATE TABLE item (
+   Id int,
+   Name char(200),
+   Primary Key(Id)
+);
+
+// table for estimations
+CREATE TABLE estimation (
+    Id int,
+    ItemId int, 
+    EstimatedBy char(50),
+    Value int,
+    Primary Key(Id)
+);
+

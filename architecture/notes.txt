@@ -1,0 +1,24 @@
+SQLite DB
+
+Listener
+    protocol is TCP/IP
+    accepting connections on the welcome socket and providing communication socket
+
+Dispatcher
+    determines the type of the incoming request (e.g.: VOTE, START ...)
+
+
+Request Handler
+    VOTE
+    LIST
+    START
+
+DBLayer
+    savevote
+    getvotestoitem
+    getitems
+    startitem
+
+dbschema:
+    item (Id, Name) 
+    vote (Id, ItemId, Value, By)
