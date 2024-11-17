@@ -10,7 +10,7 @@ test: build testhandler
 	pkill planningpokerse
 
 testhandler:
-	cc -Wall -o handlertests.out ./tests/handlertests.c handler.c storage.c -lcmocka -lm
+	cc -Wall -o handlertests.out ./tests/handlertests.c handler.c storage.c -lcmocka -lm -Wl,--wrap=store_estimation,--wrap=get_estimations
 	./handlertests.out
 
 sqliteint:
