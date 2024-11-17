@@ -1,12 +1,19 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
 
-char ESTIMATION[100] = {'\0'};
+char *ESTIMATION;
 
 int store_estimation(char *itemId, int value) 
 {
-    sprintf(ESTIMATION, "%s%d\n", ESTIMATION, value);
+    if (ESTIMATION == NULL) {
+        ESTIMATION = malloc(sizeof(char));
+    }
+    char *tmp = malloc(strlen(ESTIMATION)*sizeof(char)+ceil(log10(value))*sizeof(char)+sizeof('\n'));
+    sprintf(tmp, "%s%d\n", ESTIMATION, value);
+    free(ESTIMATION);
+    ESTIMATION = tmp;
     return 0;
 }
 
