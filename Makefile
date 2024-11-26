@@ -3,7 +3,7 @@
 build:
 	cc -Wall -o planningpokerserver.out planningpokerserver.c handler.c storage.c -lsqlite3 -lm
 
-test: build testhandler
+test: build testhandler teststorage
 	cc -Wall -o planningpokerservertests.out ./tests/planningpokerservertests.c handler.c storage.c -lcmocka -lm -lsqlite3
 	./planningpokerserver.out &
 	./planningpokerservertests.out || true
