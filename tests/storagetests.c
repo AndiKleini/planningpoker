@@ -25,15 +25,17 @@ int __wrap_sqlite3_exec(sqlite3 *db, char *sql, int (*callback)(void *, int, cha
     return (int)mock();
 }
 
-void __wrap_fprintf(FILE *stream, char *format, va_list ap) 
-{
-    printf("IS called \n");
-}
-
 int __wrap_sqlite3_close(sqlite3 *db) 
 {
     check_expected(db);
     return (int)mock();
+}
+
+void __wrap_fwarnf(char *format, va_list ap) 
+{
+    fprintf(stdout, "Hello my friend \n");
+    check_expected(format);
+    check_expected(ap);
 }
 
 static void store_estimation_cannot_open_db(void **state) 
@@ -96,8 +98,11 @@ static void store_estimation_canot_close_database_generates_warning(void **state
     expect_any(__wrap_sqlite3_exec, callback);
     expect_any(__wrap_sqlite3_exec, calbpara);
     expect_any(__wrap_sqlite3_exec, errmsg);
-    will_return(__wrap_sqlite3_close, 0);
+    will_return(__wrap_sqlite3_close, 1);
     expect_any(__wrap_sqlite3_close, db);
+    // expect_string(__wrap_fwarnf, format, "Cannot close database %s.");
+    expect_any(__wrap_fwarnf ,format);
+    expect_any(__wrap_fwarnf, ap);
     
     int ret = store_estimation("ITEM", 12);
 

@@ -14,7 +14,7 @@ testhandler:
 	./handlertests.out
 
 teststorage:
-	cc -Wall -o storagetests.out ./tests/storagetests.c storage.c -lcmocka -lsqlite3 -lm -Wl,--wrap=sqlite3_open,--wrap=sqlite3_exec,--wrap=sqlite3_close,--wrap=sqlite3_close,--wrap=fprintf
+	cc -Wall -o storagetests.out ./tests/storagetests.c storage.c -lcmocka -lsqlite3 -lm -Wl,--wrap=fwanrf,--wrap=sqlite3_open,--wrap=sqlite3_exec,--wrap=sqlite3_close,--wrap=fwarnf
 	./storagetests.out
 
 sqliteint:

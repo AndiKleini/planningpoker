@@ -1,8 +1,11 @@
+#include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
 #include <sqlite3.h>
+#include "./headers/storage.h"
+#include "./headers/log.h"
 
 char *ESTIMATION;
 
@@ -10,7 +13,8 @@ int store_estimation(char *itemId, int value)
 {
     sqlite3 *db;
     char *zErrMsg = 0;
-    int rc = sqlite3_open("./database/planningpoker.db", &db);
+    char *dbname = "./database/planningpoker.db";
+    int rc = sqlite3_open(dbname, &db);
     if(rc) {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         return 1;
@@ -31,14 +35,19 @@ int store_estimation(char *itemId, int value)
         fprintf(stdout, "Records created successfully\n", 0);
     }
 
-    sqlite3_close(db);
+    rc = sqlite3_close(db);
+    if (rc != SQLITE_OK) {
+        fprintf(stdout, "In warning \n");
+        fwarnf("Cannot close database %s.", dbname);
+    }
     return ret;
 }
 
 char* get_estimations(char *itemId) 
 { 
     sqlite3 *db;
-    int rc = sqlite3_open("./database/planningpoker.db", &db);
+    char *dbname = "./database/planningpoker.db";
+    int rc = sqlite3_open(dbname, &db);
     if(rc) {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         return(0);
@@ -73,7 +82,12 @@ char* get_estimations(char *itemId)
     ret[retsize] = '\0';
 
     sqlite3_finalize(stmt);
-    sqlite3_close(db);
+    rc = sqlite3_close(db);
+    if (rc != SQLITE_OK) {
+        fprintf(stdout, "In warning \n");
+        fwarnf("New Cannot close database %s. new    ", dbname);
+        fprintf(stdout, "After");
+    }
 
     return ret;
 }
