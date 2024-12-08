@@ -5,18 +5,30 @@ PORT=$2
 
 declare -i GLOBAL_RET=0
 
-estimate_and_query() 
+estimate_and_assert() 
+{
+    estimate $1 $2
+    assert_estimation $2 $3
+}
+
+estimate() 
 {
     ESTIMATED_VALUE=$1
     ITEMID=$2
-    EXPECTED_RES=$3
     response=$(printf "ESTIMATE\n$ITEMID\n$ESTIMATED_VALUE\0" | netcat -W 1 $SERVER $PORT)
     echo $response
     if [ "$response" != "OK" ]; then
         echo "Did not receive expected response OK. Intead got $response. \n"
         return 1;
+    else
+        return 0;
     fi
+}
 
+assert_estimation() 
+{
+    ITEMID=$1;
+    EXPECTED_RES=$2;
     response=$(printf "GETRESULT\n$ITEMID\0" | netcat -W 1 $SERVER $PORT)
     echo $response
     ret=0
@@ -29,6 +41,7 @@ estimate_and_query()
     GLOBAL_RET=$(($GLOBAL_RET + $ret));
     return $ret
 }
+
 
 echo "Testing for open socket on localhost on port $PORT !"
 
@@ -44,9 +57,15 @@ else
     return 1;
 fi
 
-estimate_and_query 10 ITEM1 10
-estimate_and_query 4 ITEM2 4
-estimate_and_query 56 ITEM3 56
-estimate_and_query 67 ITEM4 67
-estimate_and_query 78 ITEM5 78
+estimate_and_assert 10 ITEM1 10
+estimate_and_assert 4 ITEM2 4
+estimate_and_assert 56 ITEM3 56
+estimate_and_assert 67 ITEM4 67
+estimate_and_assert 78 ITEM5 78
+
+estimate 10 ITEM6
+#estimate 34 ITEM6
+#estimate 45 ITEM6
+assert_estimation ITEM6 10
+
 return $GLOBAL_RET
