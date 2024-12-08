@@ -100,7 +100,6 @@ static void store_estimation_canot_close_database_generates_warning(void **state
     expect_any(__wrap_sqlite3_exec, errmsg);
     will_return(__wrap_sqlite3_close, 1);
     expect_any(__wrap_sqlite3_close, db);
-    // expect_string(__wrap_fwarnf, format, "Cannot close database %s.");
     expect_any(__wrap_fwarnf ,format);
     expect_any(__wrap_fwarnf, ap);
     
