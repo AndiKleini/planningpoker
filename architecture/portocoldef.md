@@ -7,8 +7,9 @@ Following commands will be supported:
 * START 
 * ESTIMATE
 * GETRESULT
+* RESTART (eventually)
 
-## START
+## START (maybe obsolete)
 Starts a new planningpoker session
 
 ```code
