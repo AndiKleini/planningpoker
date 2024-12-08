@@ -14,7 +14,7 @@ static void estimate_item_once(void **state)
     assert_int_equal(system("./tests/testplanningserver.sh 127.0.0.3 1234"), 0);
 }
 
-static void teardown(void **state) 
+static void clean_db(void **state) 
 {
     sqlite3 *db;
     char *zErrMsg = 0;
@@ -43,7 +43,7 @@ static void teardown(void **state)
 int main(void) 
 {
     const struct CMUnitTest tests[] = {
-        cmocka_unit_test_teardown(estimate_item_once, teardown),
+        cmocka_unit_test_teardown(estimate_item_once, clean_db),
     };
     return cmocka_run_group_tests(tests, NULL, NULL);
 }

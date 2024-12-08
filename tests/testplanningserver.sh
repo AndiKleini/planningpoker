@@ -6,14 +6,15 @@ PORT=$2
 estimate_and_query() 
 {
     ESTIMATED_VALUE=$1
-    response=$(printf "ESTIMATE\nITEM1\n$ESTIMATED_VALUE\0" | netcat -W 1 $SERVER $PORT)
+    ITEMID=$2
+    response=$(printf "ESTIMATE\n$ITEMID\n$ESTIMATED_VALUE\0" | netcat -W 1 $SERVER $PORT)
     echo $response
     if [ "$response" != "OK" ]; then
         echo "Did not receive expected response OK. Intead got $response. \n"
         return 1;
     fi
 
-    response=$(printf "GETRESULT\nITEM1\0" | netcat -W 1 $SERVER $PORT)
+    response=$(printf "GETRESULT\n$ITEMID\0" | netcat -W 1 $SERVER $PORT)
     echo $response
     if [ "$response" = "$ESTIMATED_VALUE" ]; then
         return 0;
@@ -37,6 +38,5 @@ else
     return 1;
 fi
 
-estimate_and_query 10
-
-
+estimate_and_query 10 ITEM1
+estimate_and_query 4 ITEM2
