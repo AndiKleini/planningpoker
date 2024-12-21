@@ -64,13 +64,16 @@ char* get_estimations(char *itemId)
         retsize += sqlite3_column_bytes(stmt, 0) + 1;
         tmpret = (char *)realloc(tmpret, retsize + 2);
         if (tmpret[0] == '\0') {
-             sprintf(tmpret, "%s", (char *)sqlite3_column_text(stmt, 0));
+            sprintf(tmpret, "%s", (char *)sqlite3_column_text(stmt, 0));
         } else {
+            char tmp[retsize];
+            strcpy(tmp, tmpret);
             sprintf(
-                tmpret, 
+                tmp, 
                 "%s|%s", 
                 tmpret,
                 (char *)sqlite3_column_text(stmt, 0));
+            strcpy(tmpret, tmp);
         }
     }
         
@@ -81,7 +84,7 @@ char* get_estimations(char *itemId)
     sqlite3_finalize(stmt);
     rc = sqlite3_close(db);
     if (rc != SQLITE_OK) {
-        fwarnf("Cannot close database %s. new    ", dbname);
+        fwarnf("Cannot close database %s. new   ", dbname);
     }
 
     return ret;

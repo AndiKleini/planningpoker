@@ -14,7 +14,7 @@ static void estimate_item_once(void **state)
     assert_int_equal(system("./tests/testplanningserver.sh 127.0.0.3 1234"), 0);
 }
 
-static void clean_db(void **state) 
+static int clean_db(void **state) 
 {
     sqlite3 *db;
     char *zErrMsg = 0;
@@ -35,7 +35,8 @@ static void clean_db(void **state)
 
     rc = sqlite3_close(db);
     if (rc != SQLITE_OK) {
-        fwarnf("Cannot close database %s.", dbname);
+        fprintf(stderr, "Cannot close database %s.", dbname);
+        ret = 1;
     }
     return ret;
 }
