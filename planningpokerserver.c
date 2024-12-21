@@ -13,7 +13,6 @@ int main(int argc, char **argv)
         printf("Socket creation failed with error %d . \n", errno);
         exit(EXIT_FAILURE);
     }
-    printf("Socket was created with file descriptor id %d \n", sfd);
 
     // create server addresspeersoc
     struct sockaddr_in serveraddr = {
@@ -56,13 +55,10 @@ int main(int argc, char **argv)
             printf("Unable to accept client connection. \n");
             exit(EXIT_FAILURE);
         }
-        printf("Accepted with filedesiptor of requesting socket %d \n", peersoc);
         int nrbytes = recv(peersoc, buffer, buflen, 0); 
         if (nrbytes < 0) {
             printf("Error by reading from file descriptor %d \n", errno);
-        } else {
-            printf("Received %d bytes \n", nrbytes);
-        }
+        } 
         struct response *resp = process_request(buffer);
         int btsnd = send(peersoc, resp->msg, resp->size, 0);
         if (btsnd < 0) {

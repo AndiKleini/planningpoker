@@ -16,7 +16,6 @@ estimate()
     ESTIMATED_VALUE=$1
     ITEMID=$2
     response=$(printf "ESTIMATE\n$ITEMID\n$ESTIMATED_VALUE\0" | netcat -W 1 $SERVER $PORT)
-    echo $response
     if [ "$response" != "OK" ]; then
         echo "Did not receive expected response OK. Intead got $response. \n"
         return 1;
@@ -41,17 +40,12 @@ assert_estimation()
     return $ret
 }
 
-
-echo "Testing for open socket on localhost on port $PORT !"
-
 # check wether the server is up and running  
 which ss >/dev/null || (echo "Install ss tool first ! Script aborted here." && return 1)
 which netcat >/dev/null || (echo "Install netcat first ! Script aborted here." && return 1)
 
 ISLISTENING=$(which ss >/dev/null && ss -l | grep $PORT | wc -l)
-if [ "$ISLISTENING" -gt "0" ]; then
-    echo "Listening on $PORT succeeded !"
-else 
+if [ "$ISLISTENING" -eq "0" ]; then
     echo "Nothing is listening on $PORT !"
     return 1;
 fi
