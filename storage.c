@@ -51,21 +51,27 @@ char* get_estimations(char *itemId)
     int sqlen = 46 + strlen(itemId);
     char sqlsel[sqlen]; 
     sprintf(sqlsel, "SELECT VALUE from ESTIMATION where ITEMID='%s';", itemId);
-    printf("%s\n", sqlsel);
     sqlite3_stmt *stmt;
     rc = sqlite3_prepare_v2(db, sqlsel, sqlen, &stmt, NULL);
     if( rc != SQLITE_OK ) {
         fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
     }
 
-    rc = sqlite3_step(stmt);
-    const char *tmpret;
-    int retsize;
-    if (rc == SQLITE_ROW) {
-        tmpret = (char *)sqlite3_column_text(stmt, 0);
-        retsize = sqlite3_column_bytes(stmt, 0);
-    } else {
-        tmpret = "ERR";
+    int retsize = 0;
+    char *tmpret = malloc(1);
+    tmpret[0] = '\0';
+    while (sqlite3_step(stmt) != SQLITE_DONE) {
+        retsize += sqlite3_column_bytes(stmt, 0) + 1;
+        tmpret = (char *)realloc(tmpret, retsize + 2);
+        if (tmpret[0] == '\0') {
+             sprintf(tmpret, "%s", (char *)sqlite3_column_text(stmt, 0));
+        } else {
+            sprintf(
+                tmpret, 
+                "%s|%s", 
+                tmpret,
+                (char *)sqlite3_column_text(stmt, 0));
+        }
     }
         
     char *ret = malloc((retsize+1)*sizeof(char));

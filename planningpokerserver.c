@@ -63,8 +63,8 @@ int main(int argc, char **argv)
         } else {
             printf("Received %d bytes \n", nrbytes);
         }
-        const char *response = process_request(buffer)->msg;
-        int btsnd = send(peersoc, response, 2, 0);
+        struct response *resp = process_request(buffer);
+        int btsnd = send(peersoc, resp->msg, resp->size, 0);
         if (btsnd < 0) {
             printf("Unable to send byts \n");
         }

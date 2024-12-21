@@ -33,7 +33,6 @@ int __wrap_sqlite3_close(sqlite3 *db)
 
 void __wrap_fwarnf(char *format, va_list ap) 
 {
-    fprintf(stdout, "Hello my friend \n");
     check_expected(format);
     check_expected(ap);
 }

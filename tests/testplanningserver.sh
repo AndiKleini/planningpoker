@@ -30,7 +30,6 @@ assert_estimation()
     ITEMID=$1;
     EXPECTED_RES=$2;
     response=$(printf "GETRESULT\n$ITEMID\0" | netcat -W 1 $SERVER $PORT)
-    echo $response
     ret=0
     if [ "$response" = "$EXPECTED_RES" ]; then
         ret=0
@@ -64,8 +63,8 @@ estimate_and_assert 67 ITEM4 67
 estimate_and_assert 78 ITEM5 78
 
 estimate 10 ITEM6
-#estimate 34 ITEM6
-#estimate 45 ITEM6
-assert_estimation ITEM6 10
+estimate 34 ITEM6
+estimate 45 ITEM6
+assert_estimation ITEM6 '10|34|45'
 
 return $GLOBAL_RET
