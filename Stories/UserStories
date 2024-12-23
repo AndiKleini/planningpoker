@@ -1,4 +1,4 @@
-As an engineer I want to add an estimation value to an existing user story, so that the team can estimate complexity and effort of the user story.
+(done) As an engineer I want to add an estimation value to an existing user story, so that the team can estimate complexity and effort of the user story.
     Create DB schema for SQLite (done)
     Connect SQLite with CProgram (done)
     SetUp basic architecture of the system (done)
@@ -9,6 +9,11 @@ As an engineer I want to add an estimation value to an existing user story, so t
 As a scrum master I want to display the estimation results to the team, so that a proper story discussion can take place.
 
 As a scrum master I want to start a planning poker session for a particular item.
+
+Technical depts:
+Clean up database before each testrun so that the first test run after a debugging session doesn't fail.
+Write warning when fwarnf is used with too many arguments.
+Include concrete parameter checking in fwarnf mocks for unit tests
 
 
 

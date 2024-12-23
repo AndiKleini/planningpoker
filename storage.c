@@ -33,7 +33,7 @@ int store_estimation(char *itemId, int value)
 
     rc = sqlite3_close(db);
     if (rc != SQLITE_OK) {
-        fwarnf("Cannot close database %s.", dbname);
+        vfwarnf("Cannot close database %s.", dbname);
     }
     return ret;
 }
@@ -84,8 +84,7 @@ char* get_estimations(char *itemId)
     sqlite3_finalize(stmt);
     rc = sqlite3_close(db);
     if (rc != SQLITE_OK) {
-        fwarnf("Cannot close database %s. new   ", dbname);
+        vfwarnf("Cannot close database %s.", dbname);
     }
-
     return ret;
 }
