@@ -2,23 +2,8 @@
 
 Following commands will be supported:
 
-* CONNECT
-* LIST
-* START 
 * ESTIMATE
 * GETRESULT
-* RESTART (eventually)
-
-## START (maybe obsolete)
-Starts a new planningpoker session
-
-```code
-user@bar:~$ START\nThis should be the name of the item to vote about\n
-```
-Response:
-ItemId (integer)
-
-Error: Session already started
 
 ## ESTIMATE
 Submits a vote for a particular item

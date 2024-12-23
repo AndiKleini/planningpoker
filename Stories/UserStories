@@ -10,10 +10,13 @@ As a scrum master I want to display the estimation results to the team, so that 
 
 As a scrum master I want to start a planning poker session for a particular item.
 
+As a system administrator I want to parameterize IP address and port by starting the server.
+
 Technical depts:
 Clean up database before each testrun so that the first test run after a debugging session doesn't fail.
 Write warning when fwarnf is used with too many arguments.
 Include concrete parameter checking in fwarnf mocks for unit tests
+
 
 
 
