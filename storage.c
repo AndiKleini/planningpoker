@@ -79,6 +79,7 @@ char* get_estimations(char *itemId)
         
     char *ret = malloc((retsize+1)*sizeof(char));
     strcpy(ret, tmpret);
+    free(tmpret);
     ret[retsize] = '\0';
 
     sqlite3_finalize(stmt);

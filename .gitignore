@@ -62,3 +62,6 @@ dkms.conf
 
 # db (sqlite) files
 database/*.db
+
+# clang-check generated files
+*.plist
