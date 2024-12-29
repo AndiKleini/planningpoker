@@ -17,6 +17,9 @@ teststorage:
 	cc -Wall -o storagetests.out ./tests/storagetests.c storage.c log.c -lcmocka -lsqlite3 -lm -Wl,--wrap=fwanrf,--wrap=sqlite3_open,--wrap=sqlite3_exec,--wrap=sqlite3_close,--wrap=fwarnf
 	./storagetests.out
 
+clang-check:
+	clang-check -analyze *.c ./tests/*.c
+
 clear:
 	rm *.out
 
