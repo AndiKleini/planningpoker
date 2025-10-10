@@ -44,7 +44,7 @@ static int clean_db(void **state)
 int main(void) 
 {
     const struct CMUnitTest tests[] = {
-        cmocka_unit_test_teardown(estimate_item_once, clean_db),
+        cmocka_unit_test_setup_teardown(estimate_item_once, clean_db, clean_db)
     };
     return cmocka_run_group_tests(tests, NULL, NULL);
 }
