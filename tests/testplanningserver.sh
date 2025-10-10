@@ -40,7 +40,6 @@ assert_estimation()
         ret=1
     fi
     GLOBAL_RET=$(($GLOBAL_RET + $ret));
-    echo "Current global return value is $GLOBAL_RET"
     return $ret
 }
 
