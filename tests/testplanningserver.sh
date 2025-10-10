@@ -1,4 +1,7 @@
-#!/bin/sh
+#!/bin/bash
+
+# this script tests a planning server running on SERVER:PORT
+# it is intended to be run from a test suite (compare file planningpokerservertests.c)
 
 SERVER=$1
 PORT=$2
@@ -33,10 +36,11 @@ assert_estimation()
     if [ "$response" = "$EXPECTED_RES" ]; then
         ret=0
     else 
-        echo "Did not receive expected value $EXPECTED_RES of estimations. Intead got $response. \n"
+        echo "Did not receive expected value $EXPECTED_RES of estimations. Instead got $response. \n"
         ret=1
     fi
     GLOBAL_RET=$(($GLOBAL_RET + $ret));
+    echo "Current global return value is $GLOBAL_RET"
     return $ret
 }
 
@@ -61,4 +65,4 @@ estimate 34 ITEM6
 estimate 45 ITEM6
 assert_estimation ITEM6 '10|34|45'
 
-return $GLOBAL_RET
+exit $GLOBAL_RET
