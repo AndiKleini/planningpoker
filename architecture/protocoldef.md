@@ -23,7 +23,19 @@ example: GETRESULT ItemId
 
 Returns: "VotingResult1\nVotingResult2\nVotingResult3\n"
 
+# STARTESTIMATION
+Starts a new session for estimating a particular item.
 
+example STARTESTIMATION ItemId
+
+Returns an id representing the estimation session (SessionId): "122345656532213" 
+
+## FINISHESTIMATION
+Closes a before started session.
+
+example: FINISHESTIMATION SessionId
+
+Returns "OK\n" if successful. Otherwise ERROR.
  
  
  

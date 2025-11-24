@@ -12,6 +12,10 @@ As a scrum master I want to start a planning poker session for a particular item
 
 As a system administrator I want to parameterize IP address and port by starting the server.
 
+As a scrum master I want to organize estimations in sessions, so that participants can only estimate on items belonging to an open session. 
+
+As a scrum master I want to close estimations, so that after collecting estimations no changes are possible anymore.
+
 Technical depts:
 Clean up database before each testrun so that the first test run after a debugging session doesn't fail.
 Write warning when fwarnf is used with too many arguments.
