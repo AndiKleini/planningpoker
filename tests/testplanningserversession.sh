@@ -5,7 +5,6 @@
 
 SERVER=$1
 PORT=$2
-PORT2=$3
 
 declare -i GLOBAL_RET=0
 declare SESSION_ID=""
@@ -30,7 +29,7 @@ start_estimation()
 finish_estimation() 
 {
     ret=0;
-    response=$(printf "FINISHESTIMATION\n$SESSION_ID\0" | netcat -W 1 $SERVER $PORT2)
+    response=$(printf "FINISHESTIMATION\n$SESSION_ID\0" | netcat -W 1 $SERVER $PORT)
     if [ "$response" != "OK" ]; then
         echo "Did not receive expected response OK. Intead got $response. \n"
         ret=1 
