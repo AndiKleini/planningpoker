@@ -15,6 +15,12 @@ struct response * process_request(char* buffer)
         resp->msg = "OK";
         resp->size = 2;
         return resp;
+    } else if(strcmp(cmd, "STARTESTIMATION") == 0) {
+        char *itemId = strtok(NULL, "\n");
+        struct response *resp = (struct response *)malloc(sizeof(struct response));
+        resp->msg = store_session(itemId);
+        resp->size = strlen(resp->msg);
+        return resp;
     } else {
         struct response *resp = (struct response *)malloc(sizeof(struct response));
         char *itemId = strtok(NULL, "\n");

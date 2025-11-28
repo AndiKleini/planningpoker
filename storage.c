@@ -89,3 +89,44 @@ char* get_estimations(char *itemId)
     }
     return ret;
 }
+
+char *store_session(char *itemId) 
+{
+    return NULL;
+    /*
+    sqlite3 *db;
+    char *zErrMsg = 0;
+    char *dbname = "./database/planningpoker.db";
+    int rc = sqlite3_open(dbname, &db);
+    if(rc) {
+        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+        return 0;
+    } 
+
+    char sessionId[14];
+    sprintf(sessionId, "%ld", time(NULL));
+
+    char sqlins[58+strlen(itemId) + strlen(sessionId)]; 
+    sprintf(sqlins, "INSERT INTO SESSION (ITEMID,SESSIONID) VALUES('%s','%s');", itemId, sessionId);
+
+    int ret = 0;
+    rc = sqlite3_exec(db, sqlins, NULL, 0, &zErrMsg);
+    if( rc != SQLITE_OK ){
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+        ret = 1;
+    }
+
+    rc = sqlite3_close(db);
+    if (rc != SQLITE_OK) {
+        vfwarnf("Cannot close database %s.", dbname);
+    }
+    if (ret == 0) {
+        char *retsessionId = malloc((strlen(sessionId)+1)*sizeof(char));
+        strcpy(retsessionId, sessionId);
+        return retsessionId;
+    } else {
+        return 0;
+    }
+        */
+}

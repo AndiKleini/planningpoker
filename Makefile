@@ -10,8 +10,12 @@ test: build testhandler teststorage
 	pkill planningpokerse
 
 testhandler:
-	cc -Wall -o handlertests.out ./tests/handlertests.c handler.c storage.c log.c -lcmocka -lsqlite3 -lm -Wl,--wrap=store_estimation,--wrap=get_estimations
+	cc -Wall -o handlertests.out ./tests/handlertests.c handler.c storage.c log.c -lcmocka -lsqlite3 -lm -Wl,--wrap=store_estimation,--wrap=get_estimations,--wrap=store_session
 	./handlertests.out
+
+testhandler_debug:
+	cc -g -Wall -o handlertests.out ./tests/handlertests.c handler.c storage.c log.c -lcmocka -lsqlite3 -lm -Wl,--wrap=store_estimation,--wrap=get_estimations,--wrap=store_session
+	gdb ./handlertests.out
 
 teststorage:
 	cc -Wall -o storagetests.out ./tests/storagetests.c storage.c log.c -lcmocka -lsqlite3 -lm -Wl,--wrap=fwanrf,--wrap=sqlite3_open,--wrap=sqlite3_exec,--wrap=sqlite3_close,--wrap=fwarnf
