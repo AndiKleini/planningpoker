@@ -14,6 +14,11 @@ static void estimate_item_once(void **state)
     assert_int_equal(system("./tests/testplanningserver.sh 127.0.0.3 1234"), 0);
 }
 
+static void start_session(void **state) 
+{
+    assert_int_equal(system("./tests/testplanningserversession.sh 127.0.0.3 1234"), 0);
+}
+
 static int clean_db(void **state) 
 {
     sqlite3 *db;
@@ -30,7 +35,7 @@ static int clean_db(void **state)
     if( rc != SQLITE_OK ){
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
-        ret = 1;
+        ret = 1; 
     }
 
     rc = sqlite3_close(db);
@@ -44,7 +49,8 @@ static int clean_db(void **state)
 int main(void) 
 {
     const struct CMUnitTest tests[] = {
-        cmocka_unit_test_setup_teardown(estimate_item_once, clean_db, clean_db)
+        cmocka_unit_test_setup_teardown(estimate_item_once, clean_db, clean_db),
+        cmocka_unit_test_setup_teardown(start_session, clean_db, clean_db),
     };
     return cmocka_run_group_tests(tests, NULL, NULL);
 }

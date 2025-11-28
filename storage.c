@@ -106,7 +106,7 @@ char *store_session(char *itemId)
     sprintf(sessionId, "%ld", time(NULL));
 
     char sqlins[58+strlen(itemId) + strlen(sessionId)]; 
-    sprintf(sqlins, "INSERT INTO SESSION (ITEMID,SESSIONID) VALUES('%s','%s');", itemId, sessionId);
+    sprintf(sqlins, "INSERT INTO session (Id,ItemId) VALUES('%s','%s');", sessionId, itemId);
 
     int ret = 0;
     rc = sqlite3_exec(db, sqlins, NULL, 0, &zErrMsg);

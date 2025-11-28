@@ -25,3 +25,4 @@ Rename and merge bash scripts for test harness properly (testplanningserver.sh, 
 Handle unknown command in handler.c (avoid get estimations as default command)
 Refactor duplicate code (commands) in makefile.
 Refactor duplicate code in storage.c
+Create database at startup of server automatically.

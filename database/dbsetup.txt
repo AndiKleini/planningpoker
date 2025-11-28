@@ -14,3 +14,8 @@ CREATE TABLE estimation (
     Primary Key(Id)
 );
 
+CREATE TABLE session (
+    Id int,
+    ItemId int
+)
+

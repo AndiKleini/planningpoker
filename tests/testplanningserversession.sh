@@ -52,6 +52,6 @@ if [ "$ISLISTENING" -eq "0" ]; then
 fi
 
 start_estimation ITEM1
-finish_estimation ITEM1
+# finish_estimation ITEM1
 
 exit $GLOBAL_RET
