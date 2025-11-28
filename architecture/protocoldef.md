@@ -28,7 +28,9 @@ Starts a new session for estimating a particular item.
 
 example STARTESTIMATION ItemId
 
-Returns an id representing the estimation session (SessionId): "122345656532213" 
+Returns an id representing the estimation session (SessionId): "122345656532213" if successful.
+Otherwise ERROR.
+
 
 ## FINISHESTIMATION
 Closes a before started session.

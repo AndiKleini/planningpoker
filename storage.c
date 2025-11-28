@@ -99,7 +99,7 @@ char *store_session(char *itemId)
     int rc = sqlite3_open(dbname, &db);
     if(rc) {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-        return 0;
+        return "ERROR";
     } 
 
     char sessionId[14];
@@ -108,23 +108,24 @@ char *store_session(char *itemId)
     char sqlins[58+strlen(itemId) + strlen(sessionId)]; 
     sprintf(sqlins, "INSERT INTO session (Id,ItemId) VALUES('%s','%s');", sessionId, itemId);
 
-    int ret = 0;
+    char *ret = "";
     rc = sqlite3_exec(db, sqlins, NULL, 0, &zErrMsg);
     if( rc != SQLITE_OK ){
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
-        ret = 1;
+        ret = "ERROR";
     }
 
     rc = sqlite3_close(db);
     if (rc != SQLITE_OK) {
         vfwarnf("Cannot close database %s.", dbname);
+        ret = "ERROR";
     }
-    if (ret == 0) {
+    if (strcmp(ret,"ERROR") != 0) {
         char *retsessionId = malloc((strlen(sessionId)+1)*sizeof(char));
         strcpy(retsessionId, sessionId);
         return retsessionId;
     } else {
-        return 0;
+        return ret;
     }
 }

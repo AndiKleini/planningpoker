@@ -67,7 +67,6 @@ static void store_estimation_cannot_execute_query(void **state)
     assert_int_equal(ret, 1);
 }
 
-
 static void store_estimation_good_case(void **state) 
 {
     will_return(__wrap_sqlite3_open, 0);
@@ -108,7 +107,7 @@ static void store_estimation_canot_close_database_generates_warning(void **state
     assert_int_equal(ret, 0);
 }
 
-static void store_start_estimation_good_case(void **state) 
+static void store_session_good_case(void **state) 
 {
     will_return(__wrap_sqlite3_open, 0);
     expect_any(__wrap_sqlite3_open, filename);
@@ -127,14 +126,67 @@ static void store_start_estimation_good_case(void **state)
     assert_string_not_equal(ret, "");
 }
 
+static void store_session_cannot_open_db(void **state) 
+{
+    will_return(__wrap_sqlite3_open, 1);
+    expect_any(__wrap_sqlite3_open, filename);
+    expect_any(__wrap_sqlite3_open, db);
+
+    char *ret = store_session("ITEM");
+
+    assert_string_equal(ret, "ERROR");
+}
+
+static void store_session_cannot_execute_query(void **state) 
+{
+    will_return(__wrap_sqlite3_open, 0);
+    expect_any(__wrap_sqlite3_open, filename);
+    expect_any(__wrap_sqlite3_open, db);
+    will_return(__wrap_sqlite3_exec, 1);
+    expect_any(__wrap_sqlite3_exec, db);
+    expect_any(__wrap_sqlite3_exec, sql);
+    expect_any(__wrap_sqlite3_exec, callback);
+    expect_any(__wrap_sqlite3_exec, calbpara);
+    expect_any(__wrap_sqlite3_exec, errmsg);
+    will_return(__wrap_sqlite3_close, 0);
+    expect_any(__wrap_sqlite3_close, db);
+    
+    char *ret = store_session("ITEM");
+
+    assert_string_equal(ret, "ERROR");
+}
+
+static void store_session_canot_close_database_generates_warning(void **state) 
+{
+    will_return(__wrap_sqlite3_open, 0);
+    expect_any(__wrap_sqlite3_open, filename);
+    expect_any(__wrap_sqlite3_open, db);
+    will_return(__wrap_sqlite3_exec, 0);
+    expect_any(__wrap_sqlite3_exec, db);
+    expect_any(__wrap_sqlite3_exec, sql);
+    expect_any(__wrap_sqlite3_exec, callback);
+    expect_any(__wrap_sqlite3_exec, calbpara);
+    expect_any(__wrap_sqlite3_exec, errmsg);
+    will_return(__wrap_sqlite3_close, 1);
+    expect_any(__wrap_sqlite3_close, db);
+    expect_any(__wrap_fwarnf , format);
+    expect_value(__wrap_fwarnf, argc, 1);
+    
+    char *ret = store_session("ITEM");
+
+    assert_string_equal(ret, "ERROR");
+}
+
 int main(void) {
     const struct CMUnitTest tests[] = {
         cmocka_unit_test(store_estimation_cannot_open_db),
         cmocka_unit_test(store_estimation_cannot_execute_query),
         cmocka_unit_test(store_estimation_good_case),
         cmocka_unit_test(store_estimation_canot_close_database_generates_warning),
-        cmocka_unit_test(store_start_estimation_good_case),
+        cmocka_unit_test(store_session_good_case),
+        cmocka_unit_test(store_session_cannot_open_db),
+        cmocka_unit_test(store_session_cannot_execute_query),
+        cmocka_unit_test(store_session_canot_close_database_generates_warning)
     };
     return cmocka_run_group_tests(tests, NULL, NULL);
 }
-
