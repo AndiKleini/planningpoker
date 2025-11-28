@@ -6,6 +6,7 @@
 #include <sqlite3.h>
 #include "./headers/storage.h"
 #include "./headers/log.h"
+#include <time.h>
 
 char *ESTIMATION;
 
@@ -92,8 +93,6 @@ char* get_estimations(char *itemId)
 
 char *store_session(char *itemId) 
 {
-    return NULL;
-    /*
     sqlite3 *db;
     char *zErrMsg = 0;
     char *dbname = "./database/planningpoker.db";
@@ -128,5 +127,4 @@ char *store_session(char *itemId)
     } else {
         return 0;
     }
-        */
 }

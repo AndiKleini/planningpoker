@@ -20,3 +20,8 @@ Technical depts:
 Clean up database before each testrun so that the first test run after a debugging session doesn't fail.
 Write warning when fwarnf is used with too many arguments.
 Include concrete parameter checking in fwarnf mocks for unit tests
+Launch pokerserver used for integration tests by unit test code instead of launching it by makefile.
+Rename and merge bash scripts for test harness properly (testplanningserver.sh, testplanningserversession.sh -> testplanningserver)
+Handle unknown command in handler.c (avoid get estimations as default command)
+Refactor duplicate code (commands) in makefile.
+Refactor duplicate code in storage.c
