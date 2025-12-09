@@ -8,3 +8,5 @@ int store_estimation(char *itemId, int value);
 char* get_estimations(char *itemId);
 
 char* store_session(char *itemId);
+
+int insert(char *inssql);
