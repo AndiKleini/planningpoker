@@ -10,15 +10,15 @@
 
 char *ESTIMATION;
 
-int store_estimation(char *itemId, int value) 
+int store_estimation(char *sid, int value) 
 {
-    char sqlins[51+strlen(itemId)+(int)ceil(log10(value))]; 
-    sprintf(sqlins, "INSERT INTO ESTIMATION (ITEMID,VALUE) VALUES('%s',%d);", itemId, value);
+    char sqlins[55+strlen(sid)+(int)ceil(log10(value))]; 
+    sprintf(sqlins, "INSERT INTO ESTIMATION (SESSIONID,VALUE) VALUES('%s',%d);", sid, value);
     int rc = insert(sqlins);
     return rc;
 }
 
-char* get_estimations(char *itemId) 
+char* get_estimations(char *sid) 
 { 
     sqlite3 *db;
     char *dbname = "./database/planningpoker.db";
@@ -28,9 +28,9 @@ char* get_estimations(char *itemId)
         return(0);
     }
 
-    int sqlen = 46 + strlen(itemId);
+    int sqlen = 50 + strlen(sid);
     char sqlsel[sqlen]; 
-    sprintf(sqlsel, "SELECT VALUE from ESTIMATION where ITEMID='%s';", itemId);
+    sprintf(sqlsel, "SELECT VALUE FROM ESTIMATION WHERE SESSIONID='%s';", sid);
     sqlite3_stmt *stmt;
     rc = sqlite3_prepare_v2(db, sqlsel, sqlen, &stmt, NULL);
     if( rc != SQLITE_OK ) {
@@ -74,8 +74,8 @@ char *store_session(char *itemId)
 {
     char sessionId[14];
     sprintf(sessionId, "%ld", time(NULL));
-    char sqlins[58+strlen(itemId) + strlen(sessionId)]; 
-    sprintf(sqlins, "INSERT INTO session (Id,ItemId) VALUES('%s','%s');", sessionId, itemId);
+    char sqlins[50+strlen(itemId) + strlen(sessionId)]; 
+    sprintf(sqlins, "INSERT INTO SESSION (ID,ITEMNAME) VALUES('%s','%s');", sessionId, itemId);
     char *ret = "";
 
     int rc = insert(sqlins);

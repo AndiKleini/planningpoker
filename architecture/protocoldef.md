@@ -6,20 +6,20 @@ Following commands will be supported:
 * GETRESULT
 
 ## ESTIMATE
-Submits a vote for a particular item
+Submits a vote for a particular item specified in a certain session
 
-example: ESTIMATE\nItemId\nValue
+example: ESTIMATE\nSESSIONID\nValue
 
 OK if successful otherwise returns ERROR. 
 Errors:
 
-* ItemId does not exist
+* SessionId does not exist
 * Value for Estimation not supported (e.g.: not an integer)
 
 ## GETRESULT
 Displays the current state of the voting.
 
-example: GETRESULT ItemId
+example: GETRESULT SESSIONID
 
 Returns: "VotingResult1\nVotingResult2\nVotingResult3\n"
 

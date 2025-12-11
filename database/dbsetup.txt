@@ -1,17 +1,10 @@
-CREATE TABLE item (
-   Id int,
-   Name char(200),
-   Primary Key(Id)
-);
-
 CREATE TABLE estimation (
     Id integer primary key autoincrement,
-    ItemId char(50),
+    SessionId int,
     Value int
 );
 
 CREATE TABLE session (
     Id int,
-    ItemId int
+    ItemName char(50)
 )
-

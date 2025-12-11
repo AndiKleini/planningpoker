@@ -17,8 +17,8 @@ estimate_and_assert()
 estimate() 
 {
     ESTIMATED_VALUE=$1
-    ITEMID=$2
-    response=$(printf "ESTIMATE\n$ITEMID\n$ESTIMATED_VALUE\0" | netcat -W 1 $SERVER $PORT)
+    SESSION_ID=$2
+    response=$(printf "ESTIMATE\n$SESSION_ID\n$ESTIMATED_VALUE\0" | netcat -W 1 $SERVER $PORT)
     if [ "$response" != "OK" ]; then
         echo "Did not receive expected response OK. Intead got $response. \n"
         return 1;
@@ -29,9 +29,9 @@ estimate()
 
 assert_estimation() 
 {
-    ITEMID=$1;
+    SESSION_ID=$1;
     EXPECTED_RES=$2;
-    response=$(printf "GETRESULT\n$ITEMID\0" | netcat -W 1 $SERVER $PORT)
+    response=$(printf "GETRESULT\n$SESSION_ID\0" | netcat -W 1 $SERVER $PORT)
     ret=0
     if [ "$response" = "$EXPECTED_RES" ]; then
         ret=0
@@ -53,15 +53,15 @@ if [ "$ISLISTENING" -eq "0" ]; then
     return 1;
 fi
 
-estimate_and_assert 10 ITEM1 10
-estimate_and_assert 4 ITEM2 4
-estimate_and_assert 56 ITEM3 56
-estimate_and_assert 67 ITEM4 67
-estimate_and_assert 78 ITEM5 78
+estimate_and_assert 10 1 10
+estimate_and_assert 4 2 4
+estimate_and_assert 56 3 56
+estimate_and_assert 67 4 67
+estimate_and_assert 78 5 78
 
-estimate 10 ITEM6
-estimate 34 ITEM6
-estimate 45 ITEM6
-assert_estimation ITEM6 '10|34|45'
+estimate 10 6
+estimate 34 6
+estimate 45 6
+assert_estimation 6 '10|34|45'
 
 exit $GLOBAL_RET
