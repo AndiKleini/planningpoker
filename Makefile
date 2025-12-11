@@ -18,11 +18,11 @@ testhandler_debug:
 	gdb ./handlertests.out
 
 teststorage:
-	cc -Wall -o storagetests.out ./tests/storagetests.c storage.c log.c -lcmocka -lsqlite3 -lm -Wl,--wrap=fwanrf,--wrap=sqlite3_open,--wrap=sqlite3_exec,--wrap=sqlite3_close,--wrap=fwarnf
+	cc -Wall -o storagetests.out ./tests/storagetests.c storage.c log.c -lcmocka -lsqlite3 -lm -Wl,--wrap=fwanrf,--wrap=sqlite3_open,--wrap=sqlite3_exec,--wrap=sqlite3_close,--wrap=sqlite3_errmsg,--wrap=fwarnf
 	./storagetests.out
 
 teststorage_debug:
-	cc -g -Wall -o storagetests.out ./tests/storagetests.c storage.c log.c -lcmocka -lsqlite3 -lm -Wl,--wrap=fwanrf,--wrap=sqlite3_open,--wrap=sqlite3_exec,--wrap=sqlite3_close,--wrap=fwarnf
+	cc -g -Wall -o storagetests.out ./tests/storagetests.c storage.c log.c -lcmocka -lsqlite3 -lm -Wl,--wrap=fwanrf,--wrap=sqlite3_open,--wrap=sqlite3_exec,--wrap=sqlite3_close,--wrap=sqlite3_errmsg,--wrap=fwarnf
 	gdb ./storagetests.out
 
 clang-check:

@@ -37,11 +37,19 @@ void __wrap_fwarnf(char *format, int argc, ...)
     check_expected(argc);
 }
 
+char *__wrap_sqlite3_errmsg(sqlite3 *db) 
+{
+    check_expected(db);
+    return (char *)mock();
+}
+
 static void store_estimation_cannot_open_db(void **state) 
 {
     will_return(__wrap_sqlite3_open, 1);
     expect_any(__wrap_sqlite3_open, filename);
     expect_any(__wrap_sqlite3_open, db);
+    will_return(__wrap_sqlite3_errmsg, "Some fake error produced for a unit test.");
+    expect_any(__wrap_sqlite3_errmsg, db);
 
     int ret = store_estimation("ITEM", 12);
 
@@ -104,7 +112,7 @@ static void store_estimation_canot_close_database_generates_warning(void **state
     
     int ret = store_estimation("ITEM", 12);
 
-    assert_int_equal(ret, 0);
+    assert_int_equal(ret, 1);
 }
 
 static void store_session_good_case(void **state) 
@@ -131,6 +139,8 @@ static void store_session_cannot_open_db(void **state)
     will_return(__wrap_sqlite3_open, 1);
     expect_any(__wrap_sqlite3_open, filename);
     expect_any(__wrap_sqlite3_open, db);
+    will_return(__wrap_sqlite3_errmsg, "Some fake error produced for a unit test.");
+    expect_any(__wrap_sqlite3_errmsg, db);
 
     char *ret = store_session("ITEM");
 
@@ -156,7 +166,7 @@ static void store_session_cannot_execute_query(void **state)
     assert_string_equal(ret, "ERROR");
 }
 
-static void store_session_canot_close_database_generates_warning(void **state) 
+static void store_session_cannot_close_database_generates_warning(void **state) 
 {
     will_return(__wrap_sqlite3_open, 0);
     expect_any(__wrap_sqlite3_open, filename);
@@ -186,7 +196,7 @@ int main(void) {
         cmocka_unit_test(store_session_good_case),
         cmocka_unit_test(store_session_cannot_open_db),
         cmocka_unit_test(store_session_cannot_execute_query),
-        cmocka_unit_test(store_session_canot_close_database_generates_warning)
+        cmocka_unit_test(store_session_cannot_close_database_generates_warning)
     };
     return cmocka_run_group_tests(tests, NULL, NULL);
 }

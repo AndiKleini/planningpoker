@@ -12,31 +12,10 @@ char *ESTIMATION;
 
 int store_estimation(char *itemId, int value) 
 {
-    sqlite3 *db;
-    char *zErrMsg = 0;
-    char *dbname = "./database/planningpoker.db";
-    int rc = sqlite3_open(dbname, &db);
-    if(rc) {
-        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-        return 1;
-    } 
-
-    char sqlins[54+strlen(itemId)+(int)ceil(log10(value))]; 
+    char sqlins[51+strlen(itemId)+(int)ceil(log10(value))]; 
     sprintf(sqlins, "INSERT INTO ESTIMATION (ITEMID,VALUE) VALUES('%s',%d);", itemId, value);
-
-    int ret = 0;
-    rc = sqlite3_exec(db, sqlins, NULL, 0, &zErrMsg);
-    if( rc != SQLITE_OK ){
-        fprintf(stderr, "SQL error: %s\n", zErrMsg);
-        sqlite3_free(zErrMsg);
-        ret = 1;
-    }
-
-    rc = sqlite3_close(db);
-    if (rc != SQLITE_OK) {
-        vfwarnf("Cannot close database %s.", dbname);
-    }
-    return ret;
+    int rc = insert(sqlins);
+    return rc;
 }
 
 char* get_estimations(char *itemId) 
