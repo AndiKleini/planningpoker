@@ -6,7 +6,7 @@
     Can be tested with telnet as client 
 (done) As a scrum master I want to display the estimation results to the team, so that a proper story discussion can take place.
 
-As a scrum master I want to start a planning poker session for a particular item.
+(done) As a scrum master I want to start a planning poker session for a particular item.
 
 As a system administrator I want to parameterize IP address and port by starting the server.
 
